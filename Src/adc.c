@@ -19,8 +19,10 @@ void adcSetChannelSamplingSequence(AdcReg *adc, int channels[]) {
 			temp = i - 12;
 		}
 
-		if(i > 15)
+		if(i > 15) {
+			adc->SQR1 |= (16 << 20);
 			return;
+		}
 
 		if(channels[i] > 18)
 			*(adcReg) |= (18 << temp * 5);
@@ -45,7 +47,7 @@ void adcChannelSamplingTime(AdcReg *adc, int channel, int cycles) {
 		channel -= 10;
 	}
 
-	if(channel > 8)
+	if(channel > 9)
 		return;
 
 	if(channel >= 0)
